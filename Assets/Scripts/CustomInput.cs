@@ -10,6 +10,13 @@ public static class CustomInput {
                 Input.GetKeyDown(KeyCode.Joystick1Button0));
     }
 
+    public static bool AttackButtonDown()
+    {
+        return (Input.GetKeyDown(KeyCode.Return) ||
+                Input.GetKeyDown(KeyCode.Mouse0) ||
+                Input.GetKeyDown(KeyCode.Joystick1Button1));
+    }
+
     public static bool SlowDownButton()
     {
         return (Input.GetKey(KeyCode.A) ||
