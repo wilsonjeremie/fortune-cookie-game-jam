@@ -11,6 +11,7 @@ public class TitleController : MonoBehaviour {
     public GameObject statsScreen;
     public Slider musicSlider;
     public Slider soundSlider;
+    public Digit[] highScoreDigits;
     GameObject activeMenu;
 
     void Start()
@@ -22,6 +23,22 @@ public class TitleController : MonoBehaviour {
 
         HighScoreManager.CheckFile();
         HighScoreManager.GetHighScore();
+        SetHighScore();
+    }
+
+    void SetHighScore()
+    {
+        int prevHighScore = HighScoreManager.HighScore;
+
+        highScoreDigits[0].Number = (prevHighScore / 100000000);
+        highScoreDigits[1].Number = (prevHighScore / 10000000) % 10;
+        highScoreDigits[2].Number = (prevHighScore / 1000000) % 10;
+        highScoreDigits[3].Number = (prevHighScore / 100000) % 10;
+        highScoreDigits[4].Number = (prevHighScore / 10000) % 10;
+        highScoreDigits[5].Number = (prevHighScore / 1000) % 10;
+        highScoreDigits[6].Number = (prevHighScore / 100) % 10;
+        highScoreDigits[7].Number = (prevHighScore / 10) % 10;
+        highScoreDigits[8].Number = (prevHighScore) % 10;
     }
 
     public void StartButton()
