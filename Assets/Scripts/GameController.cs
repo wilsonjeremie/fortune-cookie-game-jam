@@ -1,17 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     public Digit[] scoreDigits;
+    public GameObject EndGameDisplay;
     Player player;
-    public Text distanceText;
     float distance;
 
-	void Start () {
-        distance = 0f;
+    void OnEnable()
+    {
         player = FindObjectOfType<Player>();
+        player.PlayerDied += OnPlayerDied;
+    }
+
+    void OnDisable()
+    {
+        player.PlayerDied -= OnPlayerDied;
+    }
+
+	void Start () {
+        EndGameDisplay.SetActive(false);
+        distance = 0f;
 	}
 	
 	void Update () {
@@ -33,5 +45,20 @@ public class GameController : MonoBehaviour {
         scoreDigits[6].Number = (distInt / 100) % 10;
         scoreDigits[7].Number = (distInt / 10) % 10;
         scoreDigits[8].Number = (distInt) % 10;
+    }
+
+    void OnPlayerDied()
+    {
+        EndGameDisplay.SetActive(true);
+    }
+
+    public void RunAgainButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Title");
     }
 }
