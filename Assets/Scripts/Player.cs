@@ -88,6 +88,5 @@ public class Player : MonoBehaviour {
     {
         Ray r = new Ray(transform.position, Vector3.down);
         touchingGround = Physics.Raycast(r, col.bounds.extents.y + 0.1f, groundLayer);
-        Debug.Log(touchingGround);
     }
 }
