@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TitleController : MonoBehaviour {
 
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject statsScreen;
+    public Slider musicSlider;
+    public Slider soundSlider;
     GameObject activeMenu;
 
     void Start()
@@ -17,7 +20,8 @@ public class TitleController : MonoBehaviour {
         statsScreen.SetActive(false);
         activeMenu = mainMenu;
 
-        HighScoreManager.WriteToFile();
+        HighScoreManager.CheckFile();
+        HighScoreManager.GetHighScore();
     }
 
     public void StartButton()
@@ -49,5 +53,15 @@ public class TitleController : MonoBehaviour {
         mainMenu.SetActive(true);
         activeMenu.SetActive(false);
         activeMenu = mainMenu;
+    }
+
+    public void SetMusicVolume()
+    {
+        SoundController.MusicVolume = musicSlider.value;
+    }
+
+    public void SetSoundVolume()
+    {
+        SoundController.SoundVolume = soundSlider.value;
     }
 }
