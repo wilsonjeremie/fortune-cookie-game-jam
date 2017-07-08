@@ -23,4 +23,11 @@ public static class CustomInput {
                 Input.GetKey(KeyCode.RightArrow) ||
                 Input.GetAxis("Joystick Horizontal") >= 1);
     }
+
+    public static bool PauseButtonDown()
+    {
+        return (Input.GetKeyDown(KeyCode.Escape) ||
+                Input.GetKeyDown(KeyCode.P) ||
+                Input.GetKeyDown(KeyCode.Joystick1Button7));
+    }
 }
