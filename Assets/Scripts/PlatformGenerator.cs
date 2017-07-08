@@ -9,8 +9,8 @@ public class PlatformGenerator : MonoBehaviour {
     public Transform maxHeight;
     float height;
     float timer;
-    float minTimer = 0.4f;
-    float maxTimer = 0.6f;
+    float minTimer = 0.6f;
+    float maxTimer = 1f;
     Player player;
 
     void Start()
@@ -43,7 +43,7 @@ public class PlatformGenerator : MonoBehaviour {
         for (int i = 0; i < 6; i++)
         {
             SetHeight();
-            Vector3 pos = new Vector3(10f + i * 20f, height, 0f);
+            Vector3 pos = new Vector3(10f + i * 15f, height, 0f);
             GameObject platform = Instantiate(platforms[Random.Range(0, platforms.Length)], pos, Quaternion.identity) as GameObject;
         }
     }
