@@ -9,18 +9,18 @@ public class Player : MonoBehaviour {
     public event Action PlayerDied;
     public float Speed { get; private set; }
     public float Euphoria { get; private set; }
+    public bool Dead { get; private set; }
     public LayerMask groundLayer;
     public Collider col;
     Animator anim;
     float jumpSpeed = 20f;
     float gravityForce = 30f;
-    float incEuphoria = 0.3f;
+    float incEuphoria = 0.1f;
     float decEuphoria = -0.5f;
     float normalSpeed = 100f;   //150
     float sprintSpeed = 200f;
     bool touchingGround;
     bool jumpPressed;
-    bool dead;
     Rigidbody rb;
 
 	void Start () {
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
-        dead = false;
+        Dead = false;
         jumpPressed = false;
 	}
 	
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour {
         {
             jumpPressed = true;
         }
-        if (!dead)
+        if (!Dead)
             UpdateEuphoria();
 	}
 
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour {
     {
         GroundDetection();
 
-        if (jumpPressed && touchingGround && !dead)
+        if (jumpPressed && touchingGround && !Dead)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
         }
@@ -56,6 +56,7 @@ public class Player : MonoBehaviour {
 
     void UpdateEuphoria()
     {
+        if (GameController.GamePaused) return;
         //Sprinting
         if (CustomInput.SpeedUpButton())
         {
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour {
 
     void Death()
     {
-        dead = true;
+        Dead = true;
         Speed = 0f;
         anim.Play("Trip");
 
