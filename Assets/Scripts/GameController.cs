@@ -33,6 +33,12 @@ public class GameController : MonoBehaviour {
         PauseMenu.SetActive(false);
         distance = 0f;
 	}
+
+    void FixedUpdate()
+    {
+        if (Time.timeScale < 2f)
+            Time.timeScale += 0.01f * Time.deltaTime;
+    }
 	
 	void Update () {
         UpdateDistance();

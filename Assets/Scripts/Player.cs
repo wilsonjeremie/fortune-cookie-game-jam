@@ -60,9 +60,10 @@ public class Player : MonoBehaviour {
         GroundDetection();
 
         //Should not attack when charging?
-        if (jumpPressed && touchingGround && !Dead && !attacking)
+        if (jumpPressed && touchingGround && !Dead)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
+            attacking = false;
         }
         if (!touchingGround) rb.AddForce(Vector3.down * gravityForce, ForceMode.Acceleration);
         jumpPressed = false;
@@ -80,6 +81,7 @@ public class Player : MonoBehaviour {
             if (attacking)
             {
                 CreateBrokenCrystal(col.gameObject);
+                Euphoria += 0.1f;
             }
             else
             {
@@ -98,13 +100,18 @@ public class Player : MonoBehaviour {
 
     void Attack()
     {
-        anim.Play("Charge");
-        attacking = true;
+        if (!attacking)
+        {
+            anim.Play("Charge");
+            attacking = true;
+        }
     }
 
     void StopAttacking()
     {
         attacking = false;
+        if (!touchingGround)
+            anim.Play("Jump Down");
     }
 
     void UpdateEuphoria()
@@ -115,7 +122,9 @@ public class Player : MonoBehaviour {
         {
             Euphoria += Time.deltaTime * incEuphoria;
             if (!attacking && touchingGround) anim.Play("Sprint");
-            Speed = sprintSpeed;
+            {
+                Speed = (attacking) ? sprintSpeed * 1.5f : sprintSpeed;
+            }
         }
         //Not sprinting
         else
@@ -126,7 +135,7 @@ public class Player : MonoBehaviour {
                 Euphoria += Time.deltaTime * decEuphoria * 0.3f;
 
             if (!attacking && touchingGround) anim.Play("Run");
-            Speed = normalSpeed;
+            Speed = (attacking) ? normalSpeed * 1.5f : normalSpeed;
         }
         if (!touchingGround && !attacking && !Dead && !airFlag)
         {
