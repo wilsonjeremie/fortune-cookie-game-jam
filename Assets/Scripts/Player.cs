@@ -13,14 +13,15 @@ public class Player : MonoBehaviour {
     public LayerMask groundLayer;
     public Collider col;
     Animator anim;
-    float jumpSpeed = 20f;
-    float gravityForce = 30f;
+    float jumpSpeed = 50f;
+    float gravityForce = 120f;
     float incEuphoria = 0.1f;
     float decEuphoria = -0.5f;
-    float normalSpeed = 100f;   //150
-    float sprintSpeed = 200f;
+    float normalSpeed = 75f;    //150
+    float sprintSpeed = 150f;   //200
     bool touchingGround;
     bool jumpPressed;
+    bool attacking;
     Rigidbody rb;
 
 	void Start () {
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour {
 
         Dead = false;
         jumpPressed = false;
+        attacking = false;
 	}
 	
 	void Update () {
@@ -39,19 +41,46 @@ public class Player : MonoBehaviour {
             jumpPressed = true;
         }
         if (!Dead)
+        {
+            if (CustomInput.AttackButtonDown())
+            {
+                Attack();
+            }
             UpdateEuphoria();
+        }
 	}
 
     void FixedUpdate()
     {
         GroundDetection();
 
-        if (jumpPressed && touchingGround && !Dead)
+        //Should not attack when charging?
+        if (jumpPressed && touchingGround && !Dead && !attacking)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
         }
         if (!touchingGround) rb.AddForce(Vector3.down * gravityForce, ForceMode.Acceleration);
         jumpPressed = false;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Crystal")
+        {
+            Euphoria = 0f;
+            Death();
+        }
+    }
+
+    void Attack()
+    {
+        anim.Play("Charge");
+        attacking = true;
+    }
+
+    void StopAttacking()
+    {
+        attacking = false;
     }
 
     void UpdateEuphoria()
@@ -61,14 +90,14 @@ public class Player : MonoBehaviour {
         if (CustomInput.SpeedUpButton())
         {
             Euphoria += Time.deltaTime * incEuphoria;
-            anim.Play("Sprint");
+            if (!attacking) anim.Play("Sprint");
             Speed = sprintSpeed;
         }
         //Not sprinting
         else
         {
             Euphoria += Time.deltaTime * decEuphoria;
-            anim.Play("Run");
+            if (!attacking) anim.Play("Run");
             Speed = normalSpeed;
         }
         Euphoria = Mathf.Clamp(Euphoria, 0f, 1f);

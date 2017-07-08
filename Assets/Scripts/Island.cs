@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Island : MonoBehaviour {
+    public GameObject crystal;
     Rigidbody rb;
     Player player;
 
@@ -11,6 +12,11 @@ public class Island : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         player = FindObjectOfType<Player>();
         rb.velocity = Vector3.left * player.Speed * 0.1f;
+
+        if (Random.Range(0, 2) == 1)
+        {
+            Destroy(crystal);
+        }
     }
 
     void Update()
