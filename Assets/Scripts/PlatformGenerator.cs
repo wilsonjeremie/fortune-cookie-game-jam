@@ -9,8 +9,8 @@ public class PlatformGenerator : MonoBehaviour {
     public Transform maxHeight;
     float height;
     float timer;
-    float minTimer = 0.9f;
-    float maxTimer = 1.2f;
+    float minTimer = 0.6f;
+    float maxTimer = 0.9f;
     Player player;
 
     void Start()
@@ -50,7 +50,7 @@ public class PlatformGenerator : MonoBehaviour {
 
     void SetHeight()
     {
-        height += Random.Range(-3f, 3f);
+        height += Random.Range(-5f, 5f);
         height = Mathf.Clamp(height, minHeight.position.y, maxHeight.position.y);
     }
 }
