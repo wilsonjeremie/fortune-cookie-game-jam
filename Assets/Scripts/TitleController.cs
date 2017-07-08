@@ -16,6 +16,8 @@ public class TitleController : MonoBehaviour {
         optionsMenu.SetActive(false);
         statsScreen.SetActive(false);
         activeMenu = mainMenu;
+
+        HighScoreManager.WriteToFile();
     }
 
     public void StartButton()
