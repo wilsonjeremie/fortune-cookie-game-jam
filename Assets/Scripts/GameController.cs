@@ -28,6 +28,11 @@ public class GameController : MonoBehaviour {
 	
 	void Update () {
         UpdateDistance();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
+        }
 	}
 
     void UpdateDistance()
