@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     float gravityForce = 30f;
     float incEuphoria = 0.3f;
     float decEuphoria = -0.5f;
-    float normalSpeed = 150f;
+    float normalSpeed = 100f;   //150
     float sprintSpeed = 200f;
     bool touchingGround;
     bool jumpPressed;
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 
 	void Start () {
         Speed = normalSpeed;
-        Euphoria = 0.5f;  //Between 0 and 1
+        Euphoria = 0.75f;  //Between 0 and 1
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
