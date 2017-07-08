@@ -12,13 +12,13 @@ public static class CustomInput {
 
     public static bool SlowDownButton()
     {
-        return (Input.GetKeyDown(KeyCode.A) ||
-                Input.GetKeyDown(KeyCode.LeftArrow));
+        return (Input.GetKey(KeyCode.A) ||
+                Input.GetKey(KeyCode.LeftArrow));
     }
 
     public static bool SpeedUpButton()
     {
-        return (Input.GetKeyDown(KeyCode.D) ||
-                Input.GetKeyDown(KeyCode.RightArrow));
+        return (Input.GetKey(KeyCode.D) ||
+                Input.GetKey(KeyCode.RightArrow));
     }
 }

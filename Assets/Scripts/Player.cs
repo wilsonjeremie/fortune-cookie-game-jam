@@ -6,10 +6,12 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public float Speed { get; private set; }
+    public float Euphoria { get; private set; }
     public LayerMask groundLayer;
     float jumpSpeed = 10f;
     float gravityForce = 20f;
-    float euphoria;
+    float incEuphoria = 0.3f;
+    float decEuphoria = -0.5f;
     bool touchingGround;
     bool jumpPressed;
     Rigidbody rb;
@@ -17,7 +19,7 @@ public class Player : MonoBehaviour {
 
 	void Start () {
         Speed = 150f;
-        euphoria = 0f;  //Between -1 and 1
+        Euphoria = 0.5f;  //Between 0 and 1
         rb = GetComponent<Rigidbody>();
         
         jumpPressed = false;
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour {
         {
             jumpPressed = true;
         }
+        UpdateEuphoria();
 	}
 
     void FixedUpdate()
@@ -40,6 +43,30 @@ public class Player : MonoBehaviour {
         }
         if (!touchingGround) rb.AddForce(Vector3.down * gravityForce, ForceMode.Acceleration);
         jumpPressed = false;
+    }
+
+    void UpdateEuphoria()
+    {
+        if (CustomInput.SpeedUpButton())
+        {
+            Euphoria += Time.deltaTime * incEuphoria;
+        }
+        else
+        {
+            Euphoria += Time.deltaTime * decEuphoria;
+        }
+        Euphoria = Mathf.Clamp(Euphoria, 0f, 1f);
+
+        //Death if euphoria < 0f
+        if (Euphoria <= 0f)
+        {
+            Death();
+        }
+    }
+
+    void Death()
+    {
+
     }
 
     void GroundDetection()
