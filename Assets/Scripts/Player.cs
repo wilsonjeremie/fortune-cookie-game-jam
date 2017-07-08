@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     public float Euphoria { get; private set; }
     public bool Dead { get; private set; }
     public GroundDetection gd;
+    public GroundDetection wd;
     public LayerMask groundLayer;
     public Collider col;
     public GameObject brokenCrystalPrefab;
@@ -160,5 +161,11 @@ public class Player : MonoBehaviour {
         //touchingGround = Physics.Raycast(r, col.bounds.extents.y + 0.1f, groundLayer);
 
         touchingGround = gd.touchingGround;
+
+        if (wd.touchingGround)
+        {
+            Euphoria = 0f;
+            Death();
+        }
     }
 }
