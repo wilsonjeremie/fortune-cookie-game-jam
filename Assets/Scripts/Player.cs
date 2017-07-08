@@ -60,9 +60,10 @@ public class Player : MonoBehaviour {
         GroundDetection();
 
         //Should not attack when charging?
-        if (jumpPressed && touchingGround && !Dead && !attacking)
+        if (jumpPressed && touchingGround && !Dead)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
+            attacking = false;
         }
         if (!touchingGround) rb.AddForce(Vector3.down * gravityForce, ForceMode.Acceleration);
         jumpPressed = false;

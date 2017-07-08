@@ -9,8 +9,8 @@ public class PlatformGenerator : MonoBehaviour {
     public Transform maxHeight;
     float height;
     float timer;
-    float minTimer = 0.6f;
-    float maxTimer = 0.9f;
+    float minTimer = 0.4f;
+    float maxTimer = 0.6f;
     Player player;
 
     void Start()
