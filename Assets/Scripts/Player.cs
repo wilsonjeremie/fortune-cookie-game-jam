@@ -8,20 +8,26 @@ public class Player : MonoBehaviour {
     public float Speed { get; private set; }
     public float Euphoria { get; private set; }
     public LayerMask groundLayer;
-    float jumpSpeed = 10f;
-    float gravityForce = 20f;
+    public Collider col;
+    Animator anim;
+    float jumpSpeed = 20f;
+    float gravityForce = 30f;
     float incEuphoria = 0.3f;
     float decEuphoria = -0.5f;
+    float normalSpeed = 150f;
+    float sprintSpeed = 200f;
     bool touchingGround;
     bool jumpPressed;
+    bool dead;
     Rigidbody rb;
-    Collider col;
 
 	void Start () {
-        Speed = 150f;
+        Speed = normalSpeed;
         Euphoria = 0.5f;  //Between 0 and 1
         rb = GetComponent<Rigidbody>();
-        
+        anim = GetComponent<Animator>();
+
+        dead = false;
         jumpPressed = false;
 	}
 	
@@ -30,7 +36,8 @@ public class Player : MonoBehaviour {
         {
             jumpPressed = true;
         }
-        UpdateEuphoria();
+        if (!dead)
+            UpdateEuphoria();
 	}
 
     void FixedUpdate()
@@ -47,13 +54,19 @@ public class Player : MonoBehaviour {
 
     void UpdateEuphoria()
     {
+        //Sprinting
         if (CustomInput.SpeedUpButton())
         {
             Euphoria += Time.deltaTime * incEuphoria;
+            anim.Play("Sprint");
+            Speed = sprintSpeed;
         }
+        //Not sprinting
         else
         {
             Euphoria += Time.deltaTime * decEuphoria;
+            anim.Play("Run");
+            Speed = normalSpeed;
         }
         Euphoria = Mathf.Clamp(Euphoria, 0f, 1f);
 
@@ -66,12 +79,15 @@ public class Player : MonoBehaviour {
 
     void Death()
     {
-
+        dead = true;
+        Speed = 0f;
+        anim.Play("Trip");
     }
 
     void GroundDetection()
     {
         Ray r = new Ray(transform.position, Vector3.down);
-        touchingGround = Physics.Raycast(r, 0.6f, groundLayer);
+        touchingGround = Physics.Raycast(r, col.bounds.extents.y + 0.1f, groundLayer);
+        Debug.Log(touchingGround);
     }
 }
