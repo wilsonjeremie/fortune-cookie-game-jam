@@ -5,15 +5,21 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour {
 
+    public float Speed { get; private set; }
     public LayerMask groundLayer;
-    public float jumpSpeed = 5f;
+    float jumpSpeed = 10f;
+    float gravityForce = 20f;
+    float euphoria;
     bool touchingGround;
     bool jumpPressed;
     Rigidbody rb;
     Collider col;
 
 	void Start () {
+        Speed = 150f;
+        euphoria = 0f;  //Between -1 and 1
         rb = GetComponent<Rigidbody>();
+        
         jumpPressed = false;
 	}
 	
@@ -32,6 +38,7 @@ public class Player : MonoBehaviour {
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
         }
+        if (!touchingGround) rb.AddForce(Vector3.down * gravityForce, ForceMode.Acceleration);
         jumpPressed = false;
     }
 

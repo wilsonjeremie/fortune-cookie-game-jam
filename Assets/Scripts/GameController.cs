@@ -1,32 +1,21 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-    public Text timeText;
-    DateTime startTime;
+    Player player;
+    public Text distanceText;
+    float distance;
 
 	void Start () {
-        startTime = DateTime.Now;
+        distance = 0f;
+        player = FindObjectOfType<Player>();
 	}
 	
 	void Update () {
-        TimeSpan elapsedTime = DateTime.Now - startTime;
-        timeText.text = "Time: " + FormatElapsedTime(elapsedTime);
+        distance += player.Speed * Time.deltaTime;
+        distanceText.text = "Distance: " + ((int)distance).ToString();
 	}
-
-    string FormatElapsedTime(TimeSpan elapsed)
-    {
-        string minutes = elapsed.Minutes.ToString();
-        minutes = (elapsed.Minutes < 10) ? "0" + minutes : minutes;
-        string seconds = elapsed.Seconds.ToString();
-        seconds = (elapsed.Seconds < 10) ? "0" + seconds : seconds;
-        string milliseconds = (elapsed.Milliseconds / 10).ToString();
-        milliseconds = (elapsed.Milliseconds < 100) ? "0" + milliseconds : milliseconds;
-        string str = string.Format("{0}\'{1}\"{2}", minutes, seconds, milliseconds);
-        return str;
-    }
 }
