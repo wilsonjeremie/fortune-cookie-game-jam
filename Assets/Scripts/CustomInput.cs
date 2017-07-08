@@ -13,12 +13,14 @@ public static class CustomInput {
     public static bool SlowDownButton()
     {
         return (Input.GetKey(KeyCode.A) ||
-                Input.GetKey(KeyCode.LeftArrow));
+                Input.GetKey(KeyCode.LeftArrow) ||
+                Input.GetAxis("Joystick Horizontal") <= -1);
     }
 
     public static bool SpeedUpButton()
     {
         return (Input.GetKey(KeyCode.D) ||
-                Input.GetKey(KeyCode.RightArrow));
+                Input.GetKey(KeyCode.RightArrow) ||
+                Input.GetAxis("Joystick Horizontal") >= 1);
     }
 }

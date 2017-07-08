@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
     {
         GroundDetection();
 
-        if (jumpPressed && touchingGround)
+        if (jumpPressed && touchingGround && !dead)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpSpeed, rb.velocity.z);
         }
