@@ -1,20 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EuphoriaDisplay : MonoBehaviour {
 
     public GameObject[] smilies;
+    public Image euphoriaBar;
     Player player;
     GameObject activeSmiley;
+    float maxEuphoriaWidth;
 
 	void Start () {
         player = FindObjectOfType<Player>();
         InitializeSmileys();
+        maxEuphoriaWidth = euphoriaBar.rectTransform.sizeDelta.x;
 	}
 	
 	void Update () {
         UpdateSmiley();
+        UpdateEuphoriaBar();
 	}
 
     void InitializeSmileys()
@@ -61,5 +66,10 @@ public class EuphoriaDisplay : MonoBehaviour {
         activeSmiley.SetActive(false);
         activeSmiley = smilies[index];
         activeSmiley.SetActive(true);
+    }
+
+    void UpdateEuphoriaBar()
+    {
+        euphoriaBar.rectTransform.sizeDelta = new Vector2(maxEuphoriaWidth * (player.Euphoria), 50f);
     }
 }
