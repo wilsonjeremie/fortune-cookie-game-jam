@@ -15,7 +15,8 @@ public class PlatformGenerator : MonoBehaviour {
 
     void Start()
     {
-        timer = Random.Range(minTimer, maxTimer);
+        //timer = Random.Range(minTimer, maxTimer);
+        timer = 0f;
         //timer = maxTimer;
         player = FindObjectOfType<Player>();
         height = minHeight.position.y;
@@ -33,13 +34,18 @@ public class PlatformGenerator : MonoBehaviour {
             SetHeight();
             Vector3 pos = new Vector3(100f, height, 0f);
 
-            GameObject tree = Instantiate(platforms[Random.Range(0, platforms.Length)], pos, Quaternion.identity) as GameObject;
+            GameObject platform = Instantiate(platforms[Random.Range(0, platforms.Length)], pos, Quaternion.identity) as GameObject;
         }
     }
 
     void StartingPlatforms()
     {
-
+        for (int i = 0; i < 6; i++)
+        {
+            SetHeight();
+            Vector3 pos = new Vector3(10f + i * 20f, height, 0f);
+            GameObject platform = Instantiate(platforms[Random.Range(0, platforms.Length)], pos, Quaternion.identity) as GameObject;
+        }
     }
 
     void SetHeight()

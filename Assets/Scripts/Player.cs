@@ -10,8 +10,10 @@ public class Player : MonoBehaviour {
     public float Speed { get; private set; }
     public float Euphoria { get; private set; }
     public bool Dead { get; private set; }
+    public GroundDetection gd;
     public LayerMask groundLayer;
     public Collider col;
+    public GameObject brokenCrystalPrefab;
     Animator anim;
     float jumpSpeed = 50f;
     float gravityForce = 120f;
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour {
     bool touchingGround;
     bool jumpPressed;
     bool attacking;
+    bool airFlag;
     Rigidbody rb;
 
 	void Start () {
@@ -29,6 +32,7 @@ public class Player : MonoBehaviour {
         Euphoria = 0.75f;  //Between 0 and 1
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        airFlag = false;
 
         Dead = false;
         jumpPressed = false;
@@ -65,11 +69,30 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "Crystal")
+        if (col.gameObject.tag == "Death")
         {
             Euphoria = 0f;
             Death();
         }
+        else if (col.gameObject.tag == "Crystal")
+        {
+            if (attacking)
+            {
+                CreateBrokenCrystal(col.gameObject);
+            }
+            else
+            {
+                Euphoria = 0f;
+                Death();
+            }
+        }
+    }
+
+    void CreateBrokenCrystal(GameObject otherCrystal)
+    {
+        GameObject brokenCrystal = Instantiate(brokenCrystalPrefab, otherCrystal.transform.position, otherCrystal.transform.rotation) as GameObject;
+        Destroy(brokenCrystal, 2f);
+        Destroy(otherCrystal);
     }
 
     void Attack()
@@ -90,17 +113,30 @@ public class Player : MonoBehaviour {
         if (CustomInput.SpeedUpButton())
         {
             Euphoria += Time.deltaTime * incEuphoria;
-            if (!attacking) anim.Play("Sprint");
+            if (!attacking && touchingGround) anim.Play("Sprint");
             Speed = sprintSpeed;
         }
         //Not sprinting
         else
         {
-            Euphoria += Time.deltaTime * decEuphoria;
-            if (!attacking) anim.Play("Run");
+            if (touchingGround)
+                Euphoria += Time.deltaTime * decEuphoria;
+            else
+                Euphoria += Time.deltaTime * decEuphoria * 0.3f;
+
+            if (!attacking && touchingGround) anim.Play("Run");
             Speed = normalSpeed;
         }
+        if (!touchingGround && !attacking && !Dead && !airFlag)
+        {
+            anim.Play("Jump Up");
+            airFlag = true;
+        }
+        if (touchingGround)
+            airFlag = false;
         Euphoria = Mathf.Clamp(Euphoria, 0f, 1f);
+
+        anim.SetBool("Falling", rb.velocity.y < 0f);
 
         //Death if euphoria < 0f
         if (Euphoria <= 0f)
@@ -120,7 +156,9 @@ public class Player : MonoBehaviour {
 
     void GroundDetection()
     {
-        Ray r = new Ray(transform.position, Vector3.down);
-        touchingGround = Physics.Raycast(r, col.bounds.extents.y + 0.1f, groundLayer);
+        //Ray r = new Ray(transform.position, Vector3.down);
+        //touchingGround = Physics.Raycast(r, col.bounds.extents.y + 0.1f, groundLayer);
+
+        touchingGround = gd.touchingGround;
     }
 }
