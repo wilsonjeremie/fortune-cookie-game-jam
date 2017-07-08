@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour {
 
+    public event Action PlayerDied;
     public float Speed { get; private set; }
     public float Euphoria { get; private set; }
     public LayerMask groundLayer;
@@ -82,6 +84,8 @@ public class Player : MonoBehaviour {
         dead = true;
         Speed = 0f;
         anim.Play("Trip");
+
+        if (PlayerDied != null) PlayerDied();
     }
 
     void GroundDetection()
