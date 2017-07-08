@@ -17,7 +17,7 @@ public class Digit : MonoBehaviour {
     GameObject activeDigit;
     int digit;
 
-    void Start()
+    void OnEnable()
     {
         InitializeDigits();
     }

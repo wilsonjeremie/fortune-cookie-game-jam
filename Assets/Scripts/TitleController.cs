@@ -23,7 +23,6 @@ public class TitleController : MonoBehaviour {
 
         HighScoreManager.CheckFile();
         HighScoreManager.GetHighScore();
-        SetHighScore();
     }
 
     void SetHighScore()
@@ -58,6 +57,7 @@ public class TitleController : MonoBehaviour {
         statsScreen.SetActive(true);
         activeMenu.SetActive(false);
         activeMenu = statsScreen;
+        SetHighScore();
     }
 
     public void QuitButton()
