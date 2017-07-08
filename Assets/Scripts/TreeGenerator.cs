@@ -24,7 +24,7 @@ public class TreeGenerator : MonoBehaviour {
             float x = Mathf.Lerp(nearRange.position.x, farRange.position.x, Random.Range(0f, 1f));
             float z = Mathf.Lerp(nearRange.position.z, farRange.position.z, Random.Range(0f, 1f));
 
-            Vector3 pos = new Vector3(x, 0f, z);
+            Vector3 pos = new Vector3(x, nearRange.position.y, z);
             Quaternion rot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
 
             GameObject tree = Instantiate(trees[Random.Range(0,2)], pos, rot) as GameObject;
