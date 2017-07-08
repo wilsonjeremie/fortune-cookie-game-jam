@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: f9bd91389241cd1418eed4c05094d539
+guid: 848cd95c64e1c594990365e906a4b275
+timeCreated: 1499537229
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -40,7 +42,6 @@ ModelImporter:
     4300008: Top004
     4300010: Box005
     4300012: Object003
-    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -65,7 +66,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -103,7 +104,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
