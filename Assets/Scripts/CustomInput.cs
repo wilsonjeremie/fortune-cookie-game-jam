@@ -21,14 +21,16 @@ public static class CustomInput {
     {
         return (Input.GetKey(KeyCode.A) ||
                 Input.GetKey(KeyCode.LeftArrow) ||
-                Input.GetAxis("Joystick Horizontal") <= -1);
+                Input.GetAxis("Joystick Horizontal") <= -1 ||
+                Input.GetAxisRaw("Horizontal") <= -1);
     }
 
     public static bool SpeedUpButton()
     {
         return (Input.GetKey(KeyCode.D) ||
                 Input.GetKey(KeyCode.RightArrow) ||
-                Input.GetAxis("Joystick Horizontal") >= 1);
+                Input.GetAxis("Joystick Horizontal") >= 1 ||
+                Input.GetAxisRaw("Horizontal") >= 1);
     }
 
     public static bool PauseButtonDown()

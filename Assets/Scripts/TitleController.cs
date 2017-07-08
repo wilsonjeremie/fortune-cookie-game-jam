@@ -9,6 +9,8 @@ public class TitleController : MonoBehaviour {
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject statsScreen;
+    public GameObject optionsLayout;
+    public GameObject controlsLayout;
     public Slider musicSlider;
     public Slider soundSlider;
     public Digit[] highScoreDigits;
@@ -67,9 +69,20 @@ public class TitleController : MonoBehaviour {
 
     public void BackButton()
     {
+        if (activeMenu == optionsMenu)
+        {
+            optionsLayout.SetActive(true);
+            controlsLayout.SetActive(false);
+        }
         mainMenu.SetActive(true);
         activeMenu.SetActive(false);
         activeMenu = mainMenu;
+    }
+
+    public void ControlsButton()
+    {
+        optionsLayout.SetActive(!optionsLayout.activeInHierarchy);
+        controlsLayout.SetActive(!controlsLayout.activeInHierarchy);
     }
 
     public void SetMusicVolume()

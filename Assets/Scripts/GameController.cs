@@ -59,6 +59,15 @@ public class GameController : MonoBehaviour {
             }
             GamePaused = !GamePaused;
         }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && player.Dead)
+        {
+            RunAgainButton();
+        }
+        if (Input.GetKeyDown(KeyCode.Joystick1Button1) && player.Dead)
+        {
+            MainMenuButton();
+        }
 	}
 
     void UpdateDistance()
