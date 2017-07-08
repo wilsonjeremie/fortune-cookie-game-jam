@@ -96,6 +96,8 @@ public class Player : MonoBehaviour {
         GameObject brokenCrystal = Instantiate(brokenCrystalPrefab, otherCrystal.transform.position, otherCrystal.transform.rotation) as GameObject;
         Destroy(brokenCrystal, 2f);
         Destroy(otherCrystal);
+
+        GetComponent<AudioSource>().Play();
     }
 
     void Attack()
