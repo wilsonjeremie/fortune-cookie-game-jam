@@ -32,10 +32,10 @@ namespace UnityStandardAssets.ImageEffects
         private Texture2D rgbDepthChannelTex;
         private Texture2D zCurveTex;
 
-        //public float saturation = 1.0f; original
+        public float saturation = 1.0f; //original
 
 
-		public float saturation = ed.satPercentage; // for this game
+		//public float saturation = ed.satPercentage; // for this game
 
         public bool  selectiveCc = false;
 
@@ -56,7 +56,6 @@ namespace UnityStandardAssets.ImageEffects
 
         new void Start ()
 		{
-
             base.Start ();
             updateTexturesOnStartup = true;
         }
