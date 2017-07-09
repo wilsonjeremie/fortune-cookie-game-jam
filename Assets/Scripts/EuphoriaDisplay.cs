@@ -10,6 +10,8 @@ public class EuphoriaDisplay : MonoBehaviour {
     Player player;
     GameObject activeSmiley;
     float maxEuphoriaWidth;
+	public float satPercentage;
+	public EuphoriaDisplay ed;
 
 	void Start () {
         player = FindObjectOfType<Player>();
@@ -34,6 +36,7 @@ public class EuphoriaDisplay : MonoBehaviour {
     void UpdateSmiley()
     {
         float euphoria = player.Euphoria;
+		satPercentage = euphoria;
 
         if (euphoria == 0f)
         {
