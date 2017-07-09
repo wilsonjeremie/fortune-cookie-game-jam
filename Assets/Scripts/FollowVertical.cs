@@ -13,6 +13,6 @@ public class FollowVertical : MonoBehaviour {
 	
 	void Update () {
         float distance = follow.position.y - startPos.y;
-        transform.position = startPos + Vector3.up * distance * 0.4f;
+        transform.position = startPos + Vector3.up * distance * 0.9f;
 	}
 }

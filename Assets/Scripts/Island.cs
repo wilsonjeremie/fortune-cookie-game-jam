@@ -13,7 +13,7 @@ public class Island : MonoBehaviour {
         player = FindObjectOfType<Player>();
         rb.velocity = Vector3.left * player.Speed * 0.1f;
 
-        if (Random.Range(0, 4) != 0)
+        if (Random.Range(0, 6) != 0)
         {
             Destroy(crystal);
         }
